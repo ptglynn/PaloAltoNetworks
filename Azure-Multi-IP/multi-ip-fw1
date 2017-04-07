@@ -19,6 +19,20 @@
         </permissions>
       </entry>
     </users>
+    <password-complexity>
+      <enabled>yes</enabled>
+      <minimum-length>12</minimum-length>
+      <password-history-count>24</password-history-count>
+      <password-change>
+        <expiration-period>90</expiration-period>
+      </password-change>
+      <minimum-uppercase-letters>1</minimum-uppercase-letters>
+      <minimum-lowercase-letters>1</minimum-lowercase-letters>
+      <minimum-numeric-letters>1</minimum-numeric-letters>
+      <minimum-special-characters>1</minimum-special-characters>
+      <block-username-inclusion>yes</block-username-inclusion>
+      <new-password-differs-by-characters>3</new-password-differs-by-characters>
+    </password-complexity>
   </mgt-config>
   <shared>
     <application/>
@@ -76,6 +90,13 @@
         <scheduled>yes</scheduled>
       </report>
     </botnet>
+    <content-preview>
+      <application/>
+      <application-type>
+        <category/>
+        <technology/>
+      </application-type>
+    </content-preview>
   </shared>
   <devices>
     <entry name="localhost.localdomain">
@@ -451,13 +472,28 @@
           <update-schedule>
             <threats>
               <recurring>
-                <weekly>
-                  <day-of-week>wednesday</day-of-week>
-                  <at>01:02</at>
-                  <action>download-only</action>
-                </weekly>
+                <daily>
+                  <at>00:00</at>
+                  <action>download-and-install</action>
+                </daily>
+                <threshold>24</threshold>
               </recurring>
             </threats>
+            <anti-virus>
+              <recurring>
+                <hourly>
+                  <at>15</at>
+                  <action>download-and-install</action>
+                </hourly>
+              </recurring>
+            </anti-virus>
+            <wildfire>
+              <recurring>
+                <every-15-mins>
+                  <action>download-and-install</action>
+                </every-15-mins>
+              </recurring>
+            </wildfire>
           </update-schedule>
           <timezone>US/Pacific</timezone>
           <service>
@@ -497,6 +533,25 @@
               <username>paloalto</username>
               <hostname>VM-FW1</hostname>
             </initcfg>
+            <enable-log-high-dp-load>yes</enable-log-high-dp-load>
+            <quota-settings>
+              <disk-quota>
+                <alarm>3</alarm>
+                <appstat>4</appstat>
+                <trsum>7</trsum>
+                <thsum>2</thsum>
+                <hipmatch>3</hipmatch>
+                <dlp-logs>1</dlp-logs>
+                <application-pcaps>1</application-pcaps>
+                <debug-filter-pcaps>1</debug-filter-pcaps>
+                <hip-reports>1</hip-reports>
+                <traffic>30</traffic>
+                <threat>16</threat>
+                <config>4</config>
+                <system>4</system>
+              </disk-quota>
+            </quota-settings>
+            <idle-timeout>10</idle-timeout>
           </management>
         </setting>
       </deviceconfig>
@@ -605,7 +660,23 @@
             </default-security-rules>
             <nat>
               <rules>
-                <entry name="Inbound-80">
+                <entry name="Health Probes">
+                  <to>
+                    <member>Untrust</member>
+                  </to>
+                  <from>
+                    <member>Untrust</member>
+                  </from>
+                  <source>
+                    <member>168.63.129.16</member>
+                  </source>
+                  <destination>
+                    <member>10.0.1.5</member>
+                  </destination>
+                  <service>any</service>
+                  <to-interface>any</to-interface>
+                </entry>
+                <entry name="Inbound-80-FW1">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <interface-address>
@@ -623,7 +694,7 @@
                     <member>any</member>
                   </source>
                   <destination>
-                    <member>52.176.89.40</member>
+                    <member>10.0.1.5</member>
                   </destination>
                   <destination-translation>
                     <translated-address>10.0.4.100</translated-address>
@@ -665,6 +736,11 @@
               </interface>
             </network>
           </import>
+          <setting>
+            <ssl-decrypt>
+              <allow-forward-decrypted-content>yes</allow-forward-decrypted-content>
+            </ssl-decrypt>
+          </setting>
         </entry>
       </vsys>
     </entry>
