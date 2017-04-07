@@ -2,8 +2,23 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-
-           "Username": {
+	"vmSize": {
+		"type": "string",
+		"allowedValues": [
+			"Standard_D3",
+			"Standard_D4",
+			"Standard_D3_v2",
+			"Standard_D4_v2",
+			"Standard_A4",
+			"Standard_DS3_v2",
+			"Standard_DS4_v2"
+		],
+		"metadata": {
+        	"description": "Azure VM size for VM-Series"
+       	},
+       	"defaultValue": "Standard_D3_v2"
+    	},
+    	"Username": {
             "defaultValue": "paloalto",
             "type": "String"
         },
