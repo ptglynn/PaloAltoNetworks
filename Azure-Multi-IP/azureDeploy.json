@@ -2,6 +2,21 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+    	"vmSize": {
+            "type": "string",
+            "allowedValues": [
+                "Standard_D3",
+				"Standard_D3_v2",
+                "Standard_D4", 
+				"Standard_D4_v2",
+				"Standard_D5",
+				"Standard_D5_v2",
+                "Standard_A4"	    
+            ],
+            "metadata": {
+                "description": "Azure VM size for VM-Series"
+            }
+        },
         "Username": {
             "defaultValue": "paloalto",
             "type": "String"
@@ -701,7 +716,7 @@
                     "id": "[resourceId('Microsoft.Compute/availabilitySets', 'AS-FW')]"
                 },
                 "hardwareProfile": {
-                    "vmSize": "Standard_D3"
+                    "vmSize": "[parameters('vmSize')]"
                 },
                 "osProfile": {
                     "computerName": "VM-FW1",
@@ -772,7 +787,7 @@
                     "id": "[resourceId('Microsoft.Compute/availabilitySets', 'AS-FW')]"
                 },
                 "hardwareProfile": {
-                    "vmSize": "Standard_D3"
+                    "vmSize": "[parameters('vmSize')]"
                 },
                 "osProfile": {
                     "computerName": "VM-FW2",
