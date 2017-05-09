@@ -75,6 +75,132 @@
             "dependsOn": []
         },
         {
+            "type": "Microsoft.Network/routeTables",
+            "name": "RT-Test",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "routes": [
+                    {
+                        "name": "Testroute-Network",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/16",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.3.100"
+                        }
+                    },
+                    {
+                        "name": "Testroute-Local",
+                        "properties": {
+                            "addressPrefix": "10.0.5.0/24",
+                            "nextHopType": "VnetLocal"
+                        }
+                    },
+                    {
+                        "name": "Testroute-Default",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.3.100"
+                        }
+                    },
+                    {
+                        "name": "Testroute-Trust",
+                        "properties": {
+                            "addressPrefix": "10.0.2.0/24",
+                            "nextHopType": "VnetLocal"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Network/routeTables",
+            "name": "RT-Dev",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "routes": [
+                    {
+                        "name": "Devroute-Network",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/16",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.3.100"
+                        }
+                    },
+                    {
+                        "name": "Devroute-Local",
+                        "properties": {
+                            "addressPrefix": "10.0.6.0/24",
+                            "nextHopType": "VnetLocal"
+                        }
+                    },
+                    {
+                        "name": "Devroute-Default",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.3.100"
+                        }
+                    },
+                    {
+                        "name": "Devroute-Trust",
+                        "properties": {
+                            "addressPrefix": "10.0.2.0/24",
+                            "nextHopType": "VnetLocal"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Network/routeTables",
+            "name": "RT-QA",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "routes": [
+                    {
+                        "name": "QAroute-Network",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/16",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.3.100"
+                        }
+                    },
+                    {
+                        "name": "QAroute-Local",
+                        "properties": {
+                            "addressPrefix": "10.0.7.0/24",
+                            "nextHopType": "VnetLocal"
+                        }
+                    },
+                    {
+                        "name": "QAroute-Default",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.0.3.100"
+                        }
+                    },
+                    {
+                        "name": "QAroute-Trust",
+                        "properties": {
+                            "addressPrefix": "10.0.2.0/24",
+                            "nextHopType": "VnetLocal"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
             "apiVersion": "2016-06-01",
             "type": "Microsoft.Network/virtualNetworks",
             "name": "NET-Demo",
@@ -118,11 +244,41 @@
                                 "id": "[resourceId('Microsoft.Network/routeTables', 'RT-Web')]"
                             }
                         }
+                    },
+                    {
+                        "name": "Test",
+                        "properties": {
+                            "addressPrefix": "10.0.5.0/24",
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables', 'RT-Test')]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "Dev",
+                        "properties": {
+                            "addressPrefix": "10.0.6.0/24",
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables', 'RT-Dev')]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "QA",
+                        "properties": {
+                            "addressPrefix": "10.0.7.0/24",
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables', 'RT-QA')]"
+                            }
+                        }
                     }
                 ]
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Network/routeTables', 'RT-Web')]"
+                "[resourceId('Microsoft.Network/routeTables', 'RT-Web')]",
+                "[resourceId('Microsoft.Network/routeTables', 'RT-Test')]",
+                "[resourceId('Microsoft.Network/routeTables', 'RT-Dev')]",
+                "[resourceId('Microsoft.Network/routeTables', 'RT-QA')]"
             ]
         },
         {
@@ -265,6 +421,207 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo')]",
                 "[resourceId('Microsoft.Compute/availabilitySets', 'AS-Web')]"
+            ]
+        },
+        {
+            "type": "Microsoft.Network/loadBalancers",
+            "name": "LB-Test",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "LB-Test-FrontEnd",
+                        "properties": {
+                            "privateIPAddress": "10.0.5.100",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo'), '/subnets/Test')]"
+                            }
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "AS-Test"
+                    }
+                ],
+                "loadBalancingRules": [
+                    {
+                        "name": "LB-Test-HTTP",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-Test'), '/frontendIPConfigurations/LB-Test-FrontEnd')]"
+                            },
+                            "frontendPort": 80,
+                            "backendPort": 80,
+                            "enableFloatingIP": false,
+                            "idleTimeoutInMinutes": 4,
+                            "protocol": "Tcp",
+                            "loadDistribution": "Default",
+                            "backendAddressPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-Test'), '/backendAddressPools/AS-Test')]"
+                            },
+                            "probe": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-Test'), '/probes/HTTP-80')]"
+                            }
+                        }
+                    }
+                ],
+                "probes": [
+                    {
+                        "name": "HTTP-80",
+                        "properties": {
+                            "protocol": "Http",
+                            "port": 80,
+                            "requestPath": "/",
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 2
+                        }
+                    }
+                ],
+                "inboundNatRules": [],
+                "outboundNatRules": [],
+                "inboundNatPools": []
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo')]",
+                "[resourceId('Microsoft.Compute/availabilitySets', 'AS-Test')]"
+            ]
+        },
+        {
+            "type": "Microsoft.Network/loadBalancers",
+            "name": "LB-Dev",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "LB-Dev-FrontEnd",
+                        "properties": {
+                            "privateIPAddress": "10.0.6.100",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo'), '/subnets/Dev')]"
+                            }
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "AS-Dev"
+                    }
+                ],
+                "loadBalancingRules": [
+                    {
+                        "name": "LB-Dev-HTTP",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-Dev'), '/frontendIPConfigurations/LB-Dev-FrontEnd')]"
+                            },
+                            "frontendPort": 80,
+                            "backendPort": 80,
+                            "enableFloatingIP": false,
+                            "idleTimeoutInMinutes": 4,
+                            "protocol": "Tcp",
+                            "loadDistribution": "Default",
+                            "backendAddressPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-Dev'), '/backendAddressPools/AS-Dev')]"
+                            },
+                            "probe": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-Dev'), '/probes/HTTP-80')]"
+                            }
+                        }
+                    }
+                ],
+                "probes": [
+                    {
+                        "name": "HTTP-80",
+                        "properties": {
+                            "protocol": "Http",
+                            "port": 80,
+                            "requestPath": "/",
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 2
+                        }
+                    }
+                ],
+                "inboundNatRules": [],
+                "outboundNatRules": [],
+                "inboundNatPools": []
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo')]",
+                "[resourceId('Microsoft.Compute/availabilitySets', 'AS-Dev')]"
+            ]
+        },
+        {
+            "type": "Microsoft.Network/loadBalancers",
+            "name": "LB-QA",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "LB-QA-FrontEnd",
+                        "properties": {
+                            "privateIPAddress": "10.0.7.100",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo'), '/subnets/QA')]"
+                            }
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "AS-QA"
+                    }
+                ],
+                "loadBalancingRules": [
+                    {
+                        "name": "LB-QA-HTTP",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-QA'), '/frontendIPConfigurations/LB-QA-FrontEnd')]"
+                            },
+                            "frontendPort": 80,
+                            "backendPort": 80,
+                            "enableFloatingIP": false,
+                            "idleTimeoutInMinutes": 4,
+                            "protocol": "Tcp",
+                            "loadDistribution": "Default",
+                            "backendAddressPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-QA'), '/backendAddressPools/AS-QA')]"
+                            },
+                            "probe": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-QA'), '/probes/HTTP-80')]"
+                            }
+                        }
+                    }
+                ],
+                "probes": [
+                    {
+                        "name": "HTTP-80",
+                        "properties": {
+                            "protocol": "Http",
+                            "port": 80,
+                            "requestPath": "/",
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 2
+                        }
+                    }
+                ],
+                "inboundNatRules": [],
+                "outboundNatRules": [],
+                "inboundNatPools": []
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo')]",
+                "[resourceId('Microsoft.Compute/availabilitySets', 'AS-QA')]"
             ]
         },
         {
@@ -633,6 +990,96 @@
         {
             "apiVersion": "2015-06-15",
             "type": "Microsoft.Network/networkInterfaces",
+            "name": "INT-Test1",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo')]",
+                "[resourceId('Microsoft.Network/loadBalancers', 'LB-Test')]"
+            ],
+            "properties": {
+                "enableIPForwarding": false,
+                "ipConfigurations": [
+                    {
+                        "name": "Test1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo'), '/subnets/Test')]"
+                            },
+                            "privateIpAddress": "10.0.5.50",
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-Test'), '/backendAddressPools/AS-Test')]"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "INT-Dev1",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo')]",
+                "[resourceId('Microsoft.Network/loadBalancers', 'LB-Dev')]"
+            ],
+            "properties": {
+                "enableIPForwarding": false,
+                "ipConfigurations": [
+                    {
+                        "name": "Dev1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo'), '/subnets/Dev')]"
+                            },
+                            "privateIpAddress": "10.0.6.50",
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-Dev'), '/backendAddressPools/AS-Dev')]"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "INT-QA1",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo')]",
+                "[resourceId('Microsoft.Network/loadBalancers', 'LB-QA')]"
+            ],
+            "properties": {
+                "enableIPForwarding": false,
+                "ipConfigurations": [
+                    {
+                        "name": "QA1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo'), '/subnets/QA')]"
+                            },
+                            "privateIpAddress": "10.0.7.50",
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-QA'), '/backendAddressPools/AS-QA')]"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Network/networkInterfaces",
             "name": "INT-Web2",
             "location": "[resourceGroup().location]",
             "dependsOn": [
@@ -653,6 +1100,96 @@
                             "loadBalancerBackendAddressPools": [
                                 {
                                     "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-Web'), '/backendAddressPools/AS-Web')]"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "INT-Test2",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo')]",
+                "[resourceId('Microsoft.Network/loadBalancers', 'LB-Test')]"
+            ],
+            "properties": {
+                "enableIPForwarding": false,
+                "ipConfigurations": [
+                    {
+                        "name": "Test2",
+                        "properties": {
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo'), '/subnets/Test')]"
+                            },
+                            "privateIpAddress": "10.0.5.51",
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-Test'), '/backendAddressPools/AS-Test')]"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "INT-Dev2",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo')]",
+                "[resourceId('Microsoft.Network/loadBalancers', 'LB-Dev')]"
+            ],
+            "properties": {
+                "enableIPForwarding": false,
+                "ipConfigurations": [
+                    {
+                        "name": "Dev2",
+                        "properties": {
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo'), '/subnets/Dev')]"
+                            },
+                            "privateIpAddress": "10.0.6.51",
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-Dev'), '/backendAddressPools/AS-Dev')]"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "INT-QA2",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo')]",
+                "[resourceId('Microsoft.Network/loadBalancers', 'LB-QA')]"
+            ],
+            "properties": {
+                "enableIPForwarding": false,
+                "ipConfigurations": [
+                    {
+                        "name": "QA2",
+                        "properties": {
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'NET-Demo'), '/subnets/QA')]"
+                            },
+                            "privateIpAddress": "10.0.7.51",
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-QA'), '/backendAddressPools/AS-QA')]"
                                 }
                             ]
                         }
@@ -691,6 +1228,45 @@
         {
             "type": "Microsoft.Compute/availabilitySets",
             "name": "AS-Web",
+            "apiVersion": "2015-06-15",
+            "location": "[resourceGroup().location]",
+            "tags": {},
+            "properties": {
+                "platformUpdateDomainCount": 2,
+                "platformFaultDomainCount": 2
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Compute/availabilitySets",
+            "name": "AS-Test",
+            "apiVersion": "2015-06-15",
+            "location": "[resourceGroup().location]",
+            "tags": {},
+            "properties": {
+                "platformUpdateDomainCount": 2,
+                "platformFaultDomainCount": 2
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Compute/availabilitySets",
+            "name": "AS-Dev",
+            "apiVersion": "2015-06-15",
+            "location": "[resourceGroup().location]",
+            "tags": {},
+            "properties": {
+                "platformUpdateDomainCount": 2,
+                "platformFaultDomainCount": 2
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Compute/availabilitySets",
+            "name": "AS-QA",
             "apiVersion": "2015-06-15",
             "location": "[resourceGroup().location]",
             "tags": {},
@@ -911,6 +1487,201 @@
     {
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Compute/virtualMachines",
+      "name": "VM-Test1",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces/', 'INT-Test1')]",
+        "[resourceId('Microsoft.Compute/virtualMachines', 'VM-FW1')]",
+        "[resourceId('Microsoft.Compute/virtualMachines', 'VM-FW2')]",
+        "[resourceId('Microsoft.Compute/availabilitySets', 'AS-Test')]"
+      ],
+      "properties": {
+          "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', 'AS-Test')]"
+                },
+                "hardwareProfile": {
+          "vmSize": "Standard_F1"
+        },
+        "osProfile": {
+          "computerName": "VM-Test1",
+          "adminUsername": "[parameters('Username')]",
+          "adminPassword": "[parameters('Password')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "Canonical",
+            "offer": "UbuntuServer",
+            "sku": "16.04.0-LTS",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "osdisk",
+            "vhd": {
+              "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/VM-Test1-OS.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          },
+          "dataDisks": [
+            {
+              "name": "datadisk",
+              "diskSizeGB": "10",
+              "lun": 0,
+              "vhd": {
+                "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/VM-Test1-Data.vhd')]"
+              },
+              "createOption": "Empty"
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', 'INT-Test1')]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "false"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "VM-Dev1",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces/', 'INT-Dev1')]",
+        "[resourceId('Microsoft.Compute/virtualMachines', 'VM-FW1')]",
+        "[resourceId('Microsoft.Compute/virtualMachines', 'VM-FW2')]",
+        "[resourceId('Microsoft.Compute/availabilitySets', 'AS-Dev')]"
+      ],
+      "properties": {
+          "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', 'AS-Dev')]"
+                },
+                "hardwareProfile": {
+          "vmSize": "Standard_F1"
+        },
+        "osProfile": {
+          "computerName": "VM-Dev1",
+          "adminUsername": "[parameters('Username')]",
+          "adminPassword": "[parameters('Password')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "Canonical",
+            "offer": "UbuntuServer",
+            "sku": "16.04.0-LTS",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "osdisk",
+            "vhd": {
+              "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/VM-Dev1-OS.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          },
+          "dataDisks": [
+            {
+              "name": "datadisk",
+              "diskSizeGB": "10",
+              "lun": 0,
+              "vhd": {
+                "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/VM-Dev1-Data.vhd')]"
+              },
+              "createOption": "Empty"
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', 'INT-Dev1')]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "false"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "VM-QA1",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces/', 'INT-QA1')]",
+        "[resourceId('Microsoft.Compute/virtualMachines', 'VM-FW1')]",
+        "[resourceId('Microsoft.Compute/virtualMachines', 'VM-FW2')]",
+        "[resourceId('Microsoft.Compute/availabilitySets', 'AS-QA')]"
+      ],
+      "properties": {
+          "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', 'AS-QA')]"
+                },
+                "hardwareProfile": {
+          "vmSize": "Standard_F1"
+        },
+        "osProfile": {
+          "computerName": "VM-QA1",
+          "adminUsername": "[parameters('Username')]",
+          "adminPassword": "[parameters('Password')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "Canonical",
+            "offer": "UbuntuServer",
+            "sku": "16.04.0-LTS",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "osdisk",
+            "vhd": {
+              "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/VM-QA1-OS.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          },
+          "dataDisks": [
+            {
+              "name": "datadisk",
+              "diskSizeGB": "10",
+              "lun": 0,
+              "vhd": {
+                "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/VM-QA1-Data.vhd')]"
+              },
+              "createOption": "Empty"
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', 'INT-QA1')]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "false"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Compute/virtualMachines",
       "name": "VM-Web2",
       "location": "[resourceGroup().location]",
       "dependsOn": [
@@ -963,6 +1734,201 @@
           "networkInterfaces": [
             {
               "id": "[resourceId('Microsoft.Network/networkInterfaces', 'INT-Web2')]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "false"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "VM-Test2",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces/', 'INT-Test2')]",
+        "[resourceId('Microsoft.Compute/virtualMachines', 'VM-FW1')]",
+        "[resourceId('Microsoft.Compute/virtualMachines', 'VM-FW2')]",
+        "[resourceId('Microsoft.Compute/availabilitySets', 'AS-Test')]"
+      ],
+      "properties": {
+          "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', 'AS-Test')]"
+                },
+        "hardwareProfile": {
+          "vmSize": "Standard_F1"
+        },
+        "osProfile": {
+          "computerName": "VM-Test2",
+          "adminUsername": "[parameters('Username')]",
+          "adminPassword": "[parameters('Password')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "Canonical",
+            "offer": "UbuntuServer",
+            "sku": "16.04.0-LTS",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "osdisk",
+            "vhd": {
+              "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/VM-Test2-OS.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          },
+          "dataDisks": [
+            {
+              "name": "datadisk",
+              "diskSizeGB": "10",
+              "lun": 0,
+              "vhd": {
+                "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/VM-Test2-Data.vhd')]"
+              },
+              "createOption": "Empty"
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', 'INT-Test2')]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "false"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "VM-Dev2",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces/', 'INT-Dev2')]",
+        "[resourceId('Microsoft.Compute/virtualMachines', 'VM-FW1')]",
+        "[resourceId('Microsoft.Compute/virtualMachines', 'VM-FW2')]",
+        "[resourceId('Microsoft.Compute/availabilitySets', 'AS-Dev')]"
+      ],
+      "properties": {
+          "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', 'AS-Dev')]"
+                },
+        "hardwareProfile": {
+          "vmSize": "Standard_F1"
+        },
+        "osProfile": {
+          "computerName": "VM-Dev2",
+          "adminUsername": "[parameters('Username')]",
+          "adminPassword": "[parameters('Password')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "Canonical",
+            "offer": "UbuntuServer",
+            "sku": "16.04.0-LTS",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "osdisk",
+            "vhd": {
+              "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/VM-Dev2-OS.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          },
+          "dataDisks": [
+            {
+              "name": "datadisk",
+              "diskSizeGB": "10",
+              "lun": 0,
+              "vhd": {
+                "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/VM-Dev2-Data.vhd')]"
+              },
+              "createOption": "Empty"
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', 'INT-Dev2')]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "false"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "VM-QA2",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces/', 'INT-QA2')]",
+        "[resourceId('Microsoft.Compute/virtualMachines', 'VM-FW1')]",
+        "[resourceId('Microsoft.Compute/virtualMachines', 'VM-FW2')]",
+        "[resourceId('Microsoft.Compute/availabilitySets', 'AS-QA')]"
+      ],
+      "properties": {
+          "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', 'AS-QA')]"
+                },
+        "hardwareProfile": {
+          "vmSize": "Standard_F1"
+        },
+        "osProfile": {
+          "computerName": "VM-QA2",
+          "adminUsername": "[parameters('Username')]",
+          "adminPassword": "[parameters('Password')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "Canonical",
+            "offer": "UbuntuServer",
+            "sku": "16.04.0-LTS",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "osdisk",
+            "vhd": {
+              "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/VM-QA2-OS.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          },
+          "dataDisks": [
+            {
+              "name": "datadisk",
+              "diskSizeGB": "10",
+              "lun": 0,
+              "vhd": {
+                "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/VM-QA2-Data.vhd')]"
+              },
+              "createOption": "Empty"
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', 'INT-QA2')]"
             }
           ]
         },

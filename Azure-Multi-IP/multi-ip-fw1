@@ -3,7 +3,7 @@
   <mgt-config>
     <users>
       <entry name="admin">
-        <phash>*</phash>
+        <phash>$1$hdfqucsg$.PEqFCG.phsis9Z1lBS5n/</phash>
         <permissions>
           <role-based>
             <superuser>yes</superuser>
@@ -11,7 +11,7 @@
         </permissions>
       </entry>
       <entry name="paloalto">
-        <phash>$1$wthaxthq$OJI.Bq3vH1ducxRyDILmL0</phash>
+        <phash>$1$rwblbyxg$RV3bPYes7Ga4xi3SEPWkb1</phash>
         <permissions>
           <role-based>
             <superuser>yes</superuser>
@@ -352,7 +352,7 @@
                       <unicast/>
                     </route-table>
                   </entry>
-                  <entry name="web">
+                  <entry name="Web">
                     <path-monitor>
                       <enable>no</enable>
                       <failure-condition>any</failure-condition>
@@ -366,6 +366,60 @@
                     </bfd>
                     <metric>10</metric>
                     <destination>10.0.4.0/24</destination>
+                    <route-table>
+                      <unicast/>
+                    </route-table>
+                  </entry>
+                  <entry name="Test">
+                    <path-monitor>
+                      <enable>no</enable>
+                      <failure-condition>any</failure-condition>
+                      <hold-time>2</hold-time>
+                    </path-monitor>
+                    <nexthop>
+                      <next-vr>Trust</next-vr>
+                    </nexthop>
+                    <bfd>
+                      <profile>None</profile>
+                    </bfd>
+                    <metric>10</metric>
+                    <destination>10.0.5.0/24</destination>
+                    <route-table>
+                      <unicast/>
+                    </route-table>
+                  </entry>
+                  <entry name="Dev">
+                    <path-monitor>
+                      <enable>no</enable>
+                      <failure-condition>any</failure-condition>
+                      <hold-time>2</hold-time>
+                    </path-monitor>
+                    <nexthop>
+                      <next-vr>Trust</next-vr>
+                    </nexthop>
+                    <bfd>
+                      <profile>None</profile>
+                    </bfd>
+                    <metric>10</metric>
+                    <destination>10.0.6.0/24</destination>
+                    <route-table>
+                      <unicast/>
+                    </route-table>
+                  </entry>
+                  <entry name="QA">
+                    <path-monitor>
+                      <enable>no</enable>
+                      <failure-condition>any</failure-condition>
+                      <hold-time>2</hold-time>
+                    </path-monitor>
+                    <nexthop>
+                      <next-vr>Trust</next-vr>
+                    </nexthop>
+                    <bfd>
+                      <profile>None</profile>
+                    </bfd>
+                    <metric>10</metric>
+                    <destination>10.0.7.0/24</destination>
                     <route-table>
                       <unicast/>
                     </route-table>
@@ -397,17 +451,17 @@
               <ip>
                 <static-route>
                   <entry name="default">
-                    <path-monitor>
-                      <enable>no</enable>
-                      <failure-condition>any</failure-condition>
-                      <hold-time>2</hold-time>
-                    </path-monitor>
                     <nexthop>
                       <next-vr>Untrust</next-vr>
                     </nexthop>
                     <bfd>
                       <profile>None</profile>
                     </bfd>
+                    <path-monitor>
+                      <enable>no</enable>
+                      <failure-condition>any</failure-condition>
+                      <hold-time>2</hold-time>
+                    </path-monitor>
                     <metric>10</metric>
                     <destination>0.0.0.0/0</destination>
                     <route-table>
@@ -434,6 +488,25 @@
                     </route-table>
                   </entry>
                   <entry name="Web">
+                    <nexthop>
+                      <ip-address>10.0.2.1</ip-address>
+                    </nexthop>
+                    <bfd>
+                      <profile>None</profile>
+                    </bfd>
+                    <path-monitor>
+                      <enable>no</enable>
+                      <failure-condition>any</failure-condition>
+                      <hold-time>2</hold-time>
+                    </path-monitor>
+                    <interface>ethernet1/2</interface>
+                    <metric>10</metric>
+                    <destination>10.0.4.0/24</destination>
+                    <route-table>
+                      <unicast/>
+                    </route-table>
+                  </entry>
+                  <entry name="Test">
                     <path-monitor>
                       <enable>no</enable>
                       <failure-condition>any</failure-condition>
@@ -447,7 +520,45 @@
                     </bfd>
                     <interface>ethernet1/2</interface>
                     <metric>10</metric>
-                    <destination>10.0.4.0/24</destination>
+                    <destination>10.0.5.0/24</destination>
+                    <route-table>
+                      <unicast/>
+                    </route-table>
+                  </entry>
+                  <entry name="Dev">
+                    <path-monitor>
+                      <enable>no</enable>
+                      <failure-condition>any</failure-condition>
+                      <hold-time>2</hold-time>
+                    </path-monitor>
+                    <nexthop>
+                      <ip-address>10.0.2.1</ip-address>
+                    </nexthop>
+                    <bfd>
+                      <profile>None</profile>
+                    </bfd>
+                    <interface>ethernet1/2</interface>
+                    <metric>10</metric>
+                    <destination>10.0.6.0/24</destination>
+                    <route-table>
+                      <unicast/>
+                    </route-table>
+                  </entry>
+                  <entry name="QA">
+                    <path-monitor>
+                      <enable>no</enable>
+                      <failure-condition>any</failure-condition>
+                      <hold-time>2</hold-time>
+                    </path-monitor>
+                    <nexthop>
+                      <ip-address>10.0.2.1</ip-address>
+                    </nexthop>
+                    <bfd>
+                      <profile>None</profile>
+                    </bfd>
+                    <interface>ethernet1/2</interface>
+                    <metric>10</metric>
+                    <destination>10.0.7.0/24</destination>
                     <route-table>
                       <unicast/>
                     </route-table>
@@ -701,6 +812,94 @@
                   </destination-translation>
                   <service>any</service>
                   <to-interface>any</to-interface>
+                </entry>
+                <entry name="Web">
+                  <source-translation>
+                    <dynamic-ip-and-port>
+                      <interface-address>
+                        <interface>ethernet1/2</interface>
+                      </interface-address>
+                    </dynamic-ip-and-port>
+                  </source-translation>
+                  <to>
+                    <member>Trust</member>
+                  </to>
+                  <from>
+                    <member>Trust</member>
+                  </from>
+                  <source>
+                    <member>any</member>
+                  </source>
+                  <destination>
+                    <member>10.0.4.100</member>
+                  </destination>
+                  <service>any</service>
+                </entry>
+                <entry name="Test">
+                  <source-translation>
+                    <dynamic-ip-and-port>
+                      <interface-address>
+                        <interface>ethernet1/2</interface>
+                      </interface-address>
+                    </dynamic-ip-and-port>
+                  </source-translation>
+                  <to>
+                    <member>Trust</member>
+                  </to>
+                  <from>
+                    <member>Trust</member>
+                  </from>
+                  <source>
+                    <member>any</member>
+                  </source>
+                  <destination>
+                    <member>10.0.5.100</member>
+                  </destination>
+                  <service>any</service>
+                </entry>
+                <entry name="Dev">
+                  <source-translation>
+                    <dynamic-ip-and-port>
+                      <interface-address>
+                        <interface>ethernet1/2</interface>
+                      </interface-address>
+                    </dynamic-ip-and-port>
+                  </source-translation>
+                  <to>
+                    <member>Trust</member>
+                  </to>
+                  <from>
+                    <member>Trust</member>
+                  </from>
+                  <source>
+                    <member>any</member>
+                  </source>
+                  <destination>
+                    <member>10.0.6.100</member>
+                  </destination>
+                  <service>any</service>
+                </entry>
+                <entry name="QA">
+                  <source-translation>
+                    <dynamic-ip-and-port>
+                      <interface-address>
+                        <interface>ethernet1/2</interface>
+                      </interface-address>
+                    </dynamic-ip-and-port>
+                  </source-translation>
+                  <to>
+                    <member>Trust</member>
+                  </to>
+                  <from>
+                    <member>Trust</member>
+                  </from>
+                  <source>
+                    <member>any</member>
+                  </source>
+                  <destination>
+                    <member>10.0.7.100</member>
+                  </destination>
+                  <service>any</service>
                 </entry>
                 <entry name="Outbound Hide">
                   <source-translation>
