@@ -836,7 +836,7 @@
                     "id": "[resourceId('Microsoft.Compute/availabilitySets', 'AS-Web')]"
                 },
                 "hardwareProfile": {
-          "vmSize": "Standard_FS1"
+          "vmSize": "Standard_F1s"
         },
         "osProfile": {
           "computerName": "VM-Web1",
@@ -894,7 +894,7 @@
                     "id": "[resourceId('Microsoft.Compute/availabilitySets', 'AS-Web')]"
                 },
         "hardwareProfile": {
-          "vmSize": "Standard_FS1"
+          "vmSize": "Standard_F1s"
         },
         "osProfile": {
           "computerName": "VM-Web2",
