@@ -745,7 +745,7 @@
                 "[resourceId('Microsoft.Network/networkInterfaces', 'INT-FW1-Management')]",
                 "[resourceId('Microsoft.Network/networkInterfaces', 'INT-FW1-Untrust')]",
                 "[resourceId('Microsoft.Network/networkInterfaces', 'INT-FW1-Trust')]",
-                "[resourceId('Microsoft.Compute/availabilitySets', 'AS-FW')]",
+                "[resourceId('Microsoft.Compute/availabilitySets', 'AS-FW')]"
             ]
         },
         {
@@ -810,7 +810,7 @@
                 "[resourceId('Microsoft.Network/networkInterfaces', 'INT-FW2-Management')]",
                 "[resourceId('Microsoft.Network/networkInterfaces', 'INT-FW2-Untrust')]",
                 "[resourceId('Microsoft.Network/networkInterfaces', 'INT-FW2-Trust')]",
-                "[resourceId('Microsoft.Compute/availabilitySets', 'AS-FW')]",
+                "[resourceId('Microsoft.Compute/availabilitySets', 'AS-FW')]"
             ]
         },
     {
