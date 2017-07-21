@@ -662,7 +662,7 @@
             "tags": {},
             "properties": {
                 "platformUpdateDomainCount": 2,
-                "platformFaultDomainCount": 2
+                "platformFaultDomainCount": 2,
             },
             "sku": {
         		"name": "Aligned"
@@ -679,10 +679,10 @@
             "properties": {
                 "platformUpdateDomainCount": 2,
                 "platformFaultDomainCount": 2,
-            "sku": {
+            },
+		"sku": {
         		"name": "Aligned"
     		},
-            },
             "resources": [],
             "dependsOn": []
         },
