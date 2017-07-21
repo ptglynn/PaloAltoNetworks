@@ -5,8 +5,8 @@
     	"vmSize": {
             "type": "string",
             "allowedValues": [
-		"Standard_DS3_v2",
-		"Standard_DS4_v2",
+                "Standard_DS3_v2",
+                "Standard_DS4_v2",
 		"Standard_DS5_v2"
             ],
             "metadata": {
@@ -664,9 +664,9 @@
                 "platformUpdateDomainCount": 2,
                 "platformFaultDomainCount": 2
             },
-            "sku": {
-        		"name": "Aligned"
-    		},
+		"sku": {
+			"name": "Aligned"
+		},
             "resources": [],
             "dependsOn": []
         },
@@ -681,8 +681,8 @@
                 "platformFaultDomainCount": 2
             },
 		"sku": {
-        		"name": "Aligned"
-    		},
+			"name": "Aligned"
+		},
             "resources": [],
             "dependsOn": []
         },
@@ -714,6 +714,9 @@
                         "offer": "vmseries1",
                         "sku": "byol",
                         "version": "8.0.0"
+                    },
+                    "osDisk": {
+                        "managedDisk": { "storageAccountType": "Premium_LRS" }
                     }
                 },
                 "networkProfile": {
@@ -778,7 +781,7 @@
                         "version": "8.0.0"
                     },
                     "osDisk": {
-                    	"managedDisk": { "storageAccountType": "Premium_LRS" }
+                        "managedDisk": { "storageAccountType": "Premium_LRS" }
                     }
                 },
                 "networkProfile": {
@@ -844,17 +847,13 @@
             "version": "latest"
           },
           "osDisk": {
-          		"managedDisk": { "storageAccountType": "Premium_LRS" }
-          	},
-            "caching": "ReadWrite",
-            "createOption": "FromImage"
+            "managedDisk": { "storageAccountType": "Premium_LRS" }
           },
           "dataDisks": [
             {
-              "managedDisk": { "storageAccountType": "Premium_LRS" },
-              "name": "datadisk",
               "diskSizeGB": "10",
               "lun": 0,
+              "managedDisk": { "storageAccountType": "Premium_LRS" },
               "createOption": "Empty"
             }
           ]
@@ -871,6 +870,7 @@
             "enabled": "false"
           }
         }
+      }
     },
     {
       "apiVersion": "2016-03-30",
@@ -886,9 +886,9 @@
       "properties": {
           "availabilitySet": {
                     "id": "[resourceId('Microsoft.Compute/availabilitySets', 'AS-Web')]"
-        	},
+                },
         "hardwareProfile": {
-          "vmSize": "Standard_F1"
+          "vmSize": "Standard_FS1"
         },
         "osProfile": {
           "computerName": "VM-Web2",
@@ -903,17 +903,16 @@
             "version": "latest"
           },
           "osDisk": {
-          		"managedDisk": { "storageAccountType": "Premium_LRS" }
-          	},
+            "name": "osdisk",
+            "managedDisk": { "storageAccountType": "Premium_LRS" },
             "caching": "ReadWrite",
             "createOption": "FromImage"
           },
           "dataDisks": [
             {
-              "managedDisk": { "storageAccountType": "Premium_LRS" },
-              "name": "datadisk",
               "diskSizeGB": "10",
               "lun": 0,
+              "managedDisk": { "storageAccountType": "Premium_LRS" },
               "createOption": "Empty"
             }
           ]
@@ -931,6 +930,7 @@
           }
         }
       }
+    }
     ],
     "outputs": {
         "firewall 1 management": {
