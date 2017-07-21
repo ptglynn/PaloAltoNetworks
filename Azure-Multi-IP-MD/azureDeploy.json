@@ -657,7 +657,7 @@
         {
             "type": "Microsoft.Compute/availabilitySets",
             "name": "AS-FW",
-            "apiVersion": "2015-06-15",
+            "apiVersion": "2016-04-30-preview",
             "location": "[resourceGroup().location]",
             "tags": {},
             "properties": {
@@ -673,7 +673,7 @@
         {
             "type": "Microsoft.Compute/availabilitySets",
             "name": "AS-Web",
-            "apiVersion": "2015-06-15",
+            "apiVersion": "2016-04-30-preview",
             "location": "[resourceGroup().location]",
             "tags": {},
             "properties": {
@@ -687,7 +687,7 @@
             "dependsOn": []
         },
         {
-            "apiVersion": "2015-06-15",
+            "apiVersion": "2016-04-30-preview",
             "type": "Microsoft.Compute/virtualMachines",
             "name": "VM-FW1",
             "location": "[resourceGroup().location]",
@@ -752,7 +752,7 @@
             ]
         },
         {
-            "apiVersion": "2015-06-15",
+            "apiVersion": "2016-04-30-preview",
             "type": "Microsoft.Compute/virtualMachines",
             "name": "VM-FW2",
             "location": "[resourceGroup().location]",
@@ -817,7 +817,7 @@
             ]
         },
     {
-      "apiVersion": "2016-03-30",
+      "apiVersion": "2016-04-30-preview",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "VM-Web1",
       "location": "[resourceGroup().location]",
@@ -873,7 +873,7 @@
       }
     },
     {
-      "apiVersion": "2016-03-30",
+      "apiVersion": "2016-04-30-preview",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "VM-Web2",
       "location": "[resourceGroup().location]",
