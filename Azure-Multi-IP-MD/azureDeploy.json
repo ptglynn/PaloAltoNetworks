@@ -931,7 +931,6 @@
           }
         }
       }
-    }
     ],
     "outputs": {
         "firewall 1 management": {
