@@ -716,7 +716,9 @@
                         "version": "8.0.0"
                     },
                     "osDisk": {
-                        "managedDisk": { "storageAccountType": "Premium_LRS" }
+                        "managedDisk": { "storageAccountType": "Premium_LRS" },
+			"caching": "ReadWrite",
+            		"createOption": "FromImage"
                     }
                 },
                 "networkProfile": {
@@ -781,7 +783,9 @@
                         "version": "8.0.0"
                     },
                     "osDisk": {
-                        "managedDisk": { "storageAccountType": "Premium_LRS" }
+                        "managedDisk": { "storageAccountType": "Premium_LRS" },
+			"caching": "ReadWrite",
+            		"createOption": "FromImage"
                     }
                 },
                 "networkProfile": {
@@ -847,7 +851,9 @@
             "version": "latest"
           },
           "osDisk": {
-            "managedDisk": { "storageAccountType": "Premium_LRS" }
+            "managedDisk": { "storageAccountType": "Premium_LRS" },
+		"caching": "ReadWrite",
+            "createOption": "FromImage"
           },
           "dataDisks": [
             {
