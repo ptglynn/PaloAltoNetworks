@@ -182,8 +182,12 @@
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "name": "IP-LB-Public",
-            "apiVersion": "2016-03-30",
+            "apiVersion": "2017-08-01",
             "location": "[resourceGroup().location]",
+		"sku":
+            {
+                "name": "Standard"
+            },
             "properties": {
                 "publicIPAllocationMethod": "Static",
                 "idleTimeoutInMinutes": 4,
