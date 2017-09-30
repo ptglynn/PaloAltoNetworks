@@ -122,8 +122,12 @@
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "name": "IP-FW1-Management",
-            "apiVersion": "2016-03-30",
+            "apiVersion": "2017-08-01",
             "location": "[resourceGroup().location]",
+		"sku":
+            {
+                "name": "Standard"
+            },
             "properties": {
                 "publicIPAllocationMethod": "Static",
                 "idleTimeoutInMinutes": 4,
@@ -137,8 +141,12 @@
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "name": "IP-FW2-Management",
-            "apiVersion": "2016-03-30",
+            "apiVersion": "2017-08-01",
             "location": "[resourceGroup().location]",
+		"sku":
+            {
+                "name": "Standard"
+            },
             "properties": {
                 "publicIPAllocationMethod": "Static",
                 "idleTimeoutInMinutes": 4,
@@ -152,8 +160,12 @@
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "name": "IP-FW1-Egress",
-            "apiVersion": "2016-03-30",
+            "apiVersion": "2017-08-01",
             "location": "[resourceGroup().location]",
+		"sku":
+            {
+                "name": "Standard"
+            },
             "properties": {
                 "publicIPAllocationMethod": "Static",
                 "idleTimeoutInMinutes": 4,
@@ -167,8 +179,12 @@
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "name": "IP-FW2-Egress",
-            "apiVersion": "2016-03-30",
+            "apiVersion": "2017-08-01",
             "location": "[resourceGroup().location]",
+		"sku":
+            {
+                "name": "Standard"
+            },
             "properties": {
                 "publicIPAllocationMethod": "Static",
                 "idleTimeoutInMinutes": 4,
