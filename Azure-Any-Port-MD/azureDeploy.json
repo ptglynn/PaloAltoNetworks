@@ -197,8 +197,12 @@
         {
             "type": "Microsoft.Network/loadBalancers",
             "name": "LB-Web",
-            "apiVersion": "2016-03-30",
+            "apiVersion": "2017-08-01",
             "location": "[resourceGroup().location]",
+		"sku":
+            {
+                "name": "Standard"
+            },
             "properties": {
                 "frontendIPConfigurations": [
                     {
@@ -264,8 +268,12 @@
         {
             "type": "Microsoft.Network/loadBalancers",
             "name": "LB-Public",
-            "apiVersion": "2016-03-30",
+            "apiVersion": "2017-08-01",
             "location": "[resourceGroup().location]",
+		"sku":
+            {
+                "name": "Standard"
+            },
             "properties": {
                 "frontendIPConfigurations": [
                     {
