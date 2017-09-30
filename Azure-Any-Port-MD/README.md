@@ -1,14 +1,14 @@
 # Azure-Multi-IP_DEMO
 
-[<img src="http://azuredeploy.net/deploybutton.png"/>](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fptglynn%2FPaloAltoNetworks%2Fmaster%2FAzure-Multi-IP-MD%2FazureDeploy.json)
+[<img src="http://azuredeploy.net/deploybutton.png"/>](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fptglynn%2FPaloAltoNetworks%2Fmaster%2FAzure-Any-Port-MD%2FazureDeploy.json)
 
 This template deploys a firewall sandwich environment that includes:
 
-- One Public Load Balancer (LB-Public)
+- One Public Load Balancer (LB-Public) - "Basic SKU"
 - Two Palo Alto Networks Firewalls
-- One Internal Load Balancer (LB-Web)
+- One Internal Load Balancer (LB-Web) - "Basic SKU"
 - Two Ubuntu Servers for use as web servers
-- One Egress Load Balancer (LB-Egress)
+- One Egress Load Balancer (LB-Egress) - "Standard SKU"
 - Multiple Subnets and UDRs to support the traffic flow
 
 The template creates all the infrastructure and appropriate UDRs in the 10.0.0.0/16 VNET. Post-deployment tasks include:
