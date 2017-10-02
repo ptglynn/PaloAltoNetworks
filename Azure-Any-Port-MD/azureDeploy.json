@@ -839,8 +839,6 @@
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceId('Microsoft.Network/networkInterfaces/', 'INT-Web1')]",
-        "[resourceId('Microsoft.Compute/virtualMachines', 'VM-FW1')]",
-        "[resourceId('Microsoft.Compute/virtualMachines', 'VM-FW2')]",
         "[resourceId('Microsoft.Compute/availabilitySets', 'AS-Web')]"
       ],
       "properties": {
@@ -897,8 +895,6 @@
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceId('Microsoft.Network/networkInterfaces/', 'INT-Web2')]",
-        "[resourceId('Microsoft.Compute/virtualMachines', 'VM-FW1')]",
-        "[resourceId('Microsoft.Compute/virtualMachines', 'VM-FW2')]",
         "[resourceId('Microsoft.Compute/availabilitySets', 'AS-Web')]"
       ],
       "properties": {
