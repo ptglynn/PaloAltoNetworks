@@ -685,7 +685,7 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "Allow-All",
             "apiVersion": "2017-06-01",
-            "location": "centralus",
+		"location": "[resourceGroup().location]",
             "properties": {
                 "securityRules": [
                     {
