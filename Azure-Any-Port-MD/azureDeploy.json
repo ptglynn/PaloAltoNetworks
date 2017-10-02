@@ -85,7 +85,7 @@
                         "properties": {
                             "addressPrefix": "10.0.0.0/24",
 				"networkSecurityGroup": {
-                                "id": "Allow-All"
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'Allow-All')]"
                             }
                         }
                     },
@@ -94,7 +94,7 @@
                         "properties": {
                             "addressPrefix": "10.0.1.0/24",
 				"networkSecurityGroup": {
-                                "id": "Allow-All"
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'Allow-All')]"
                             }
                          }
                     },
@@ -103,7 +103,7 @@
                         "properties": {
                             "addressPrefix": "10.0.2.0/24",
 				"networkSecurityGroup": {
-                                "id": "Allow-All"
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'Allow-All')]"
                             }
                         }
                     },
@@ -112,7 +112,7 @@
                         "properties": {
                             "addressPrefix": "10.0.3.0/24",
 				"networkSecurityGroup": {
-                                "id": "Allow-All"
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'Allow-All')]"
                             }
                          }
                     },
@@ -124,7 +124,7 @@
                                 "id": "[resourceId('Microsoft.Network/routeTables', 'RT-Web')]"
                             },
 				"networkSecurityGroup": {
-                                "id": "Allow-All"
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'Allow-All')]"
                             }
                         }
                     }
