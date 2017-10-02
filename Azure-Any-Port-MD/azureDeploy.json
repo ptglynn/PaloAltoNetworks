@@ -384,36 +384,16 @@
                 ],
                 "loadBalancingRules": [
                     {
-                        "name": "LB-Egress-HTTP",
+                        "name": "Allow-All-Out",
                         "properties": {
                             "frontendIPConfiguration": {
                                 "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-Egress'), '/frontendIPConfigurations/LB-Egress-FrontEnd')]"
                             },
-                            "frontendPort": 80,
-                            "backendPort": 80,
+                            "frontendPort": 0,
+                            "backendPort": 0,
                             "enableFloatingIP": true,
                             "idleTimeoutInMinutes": 4,
-                            "protocol": "Tcp",
-                            "loadDistribution": "Default",
-                            "backendAddressPool": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-Egress'), '/backendAddressPools/AS-FW')]"
-                            },
-                            "probe": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-Egress'), '/probes/TCP-22')]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "LB-Egress-SSL",
-                        "properties": {
-                            "frontendIPConfiguration": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-Egress'), '/frontendIPConfigurations/LB-Egress-FrontEnd')]"
-                            },
-                            "frontendPort": 443,
-                            "backendPort": 443,
-                            "enableFloatingIP": true,
-                            "idleTimeoutInMinutes": 4,
-                            "protocol": "Tcp",
+                            "protocol": "All",
                             "loadDistribution": "Default",
                             "backendAddressPool": {
                                 "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-Egress'), '/backendAddressPools/AS-FW')]"
