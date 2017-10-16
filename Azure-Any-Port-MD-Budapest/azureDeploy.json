@@ -859,7 +859,7 @@
             "location": "[resourceGroup().location]",
             "plan": {
                 "name": "byol",
-                "product": "vmseries1",
+                "product": "vmseries1-beta-preview",
                 "publisher": "paloaltonetworks"
             },
             "properties": {
@@ -877,7 +877,7 @@
                 "storageProfile": {
                     "imageReference": {
                         "publisher": "paloaltonetworks",
-                        "offer": "vmseries1",
+                        "offer": "vmseries1-beta-preview",
                         "sku": "byol",
                         "version": "8.1.0"
                     },
@@ -926,7 +926,7 @@
             "location": "[resourceGroup().location]",
             "plan": {
                 "name": "byol",
-                "product": "vmseries1",
+                "product": "vmseries1-beta-preview",
                 "publisher": "paloaltonetworks"
             },
             "properties": {
@@ -944,7 +944,7 @@
                 "storageProfile": {
                     "imageReference": {
                         "publisher": "paloaltonetworks",
-                        "offer": "vmseries1",
+                        "offer": "vmseries1-beta-preview",
                         "sku": "byol",
                         "version": "8.1.0"
                     },
