@@ -52,7 +52,7 @@
     },
     "variables": {
         "uniqueId": "[uniqueString(resourceGroup().id)]",
-	"customData": "[concat('storage-account=', parameters('BootstrapStorageAccount'), ',access-key=', parameters('StorageAccountAccessKey'), ',file-share=', parameters('StorageAccountFileShare'), ',share-directory=', parameters('StorageAccountFileShareDirectory'))]
+	"customData": "[concat('storage-account=', parameters('BootstrapStorageAccount'), ',access-key=', parameters('StorageAccountAccessKey'), ',file-share=', parameters('StorageAccountFileShare'), ',share-directory=', parameters('StorageAccountFileShareDirectory'))]"
     },
     "resources": [
         {
