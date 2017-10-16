@@ -20,10 +20,39 @@
         "Password": {
             "defaultValue": null,
             "type": "SecureString"
-        }
+        },
+	"BootstrapStorageAccount": {
+		"defaultValue": null,
+		"type": "String",
+		"metadata": {
+                "description": "Storage account hosting the bootstrap files"
+            }
+	},
+	"StorageAccountAccessKey": {
+		"defaultValue": null,
+		"type": "String",
+		"metadata": {
+                "description": "Authentication key to access the storage account"
+            }
+	},
+	"StorageAccountFileShare": {
+		"defaultValue": null,
+		"type": "String",
+		"metadata": {
+                "description": "The file share in the storage account where the bootstrap files are located"
+            }
+	},
+	"StorageAccountFileShareDirectory": {
+		"defaultValue": "None",
+		"type": "String",
+		"metadata": {
+                "description": "The subdirectory hosting the bootstrap files. Only required if hosting multiple bootstrap directories on the same share"
+            }
+	}
     },
     "variables": {
-        "uniqueId": "[uniqueString(resourceGroup().id)]"
+        "uniqueId": "[uniqueString(resourceGroup().id)]",
+	"customData": "[concat('storage-account=', parameters('BootstrapStorageAccount'), ',access-key=', parameters('StorageAccountAccessKey'), ',file-share=', parameters('StorageAccountFileShare'), ',share-directory=', parameters('StorageAccountFileShareDirectory'))]
     },
     "resources": [
         {
@@ -870,9 +899,10 @@
                     "vmSize": "[parameters('vmSize')]"
                 },
                 "osProfile": {
-                    "computerName": "VM-FW1",
-          "adminUsername": "[parameters('Username')]",
-          "adminPassword": "[parameters('Password')]"
+			"computerName": "VM-FW1",
+          		"adminUsername": "[parameters('Username')]",
+          		"adminPassword": "[parameters('Password')]",
+	  		"customData": "[base64(parameters('customData'))]"
                 },
                 "storageProfile": {
                     "imageReference": {
@@ -937,9 +967,10 @@
                     "vmSize": "[parameters('vmSize')]"
                 },
                 "osProfile": {
-                    "computerName": "VM-FW2",
-          "adminUsername": "[parameters('Username')]",
-          "adminPassword": "[parameters('Password')]"
+			"computerName": "VM-FW2",
+			"adminUsername": "[parameters('Username')]",
+			"adminPassword": "[parameters('Password')]",
+			"customData": "[base64(parameters('customData'))]"
                 },
                 "storageProfile": {
                     "imageReference": {
