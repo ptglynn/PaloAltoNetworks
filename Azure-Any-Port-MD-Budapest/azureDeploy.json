@@ -902,7 +902,7 @@
 			"computerName": "VM-FW1",
           		"adminUsername": "[parameters('Username')]",
           		"adminPassword": "[parameters('Password')]",
-	  		"customData": "[base64(parameters('customData'))]"
+	  		"customData": "[base64(variables('customData'))]"
                 },
                 "storageProfile": {
                     "imageReference": {
@@ -970,7 +970,7 @@
 			"computerName": "VM-FW2",
 			"adminUsername": "[parameters('Username')]",
 			"adminPassword": "[parameters('Password')]",
-			"customData": "[base64(parameters('customData'))]"
+			"customData": "[base64(variables('customData'))]"
                 },
                 "storageProfile": {
                     "imageReference": {
