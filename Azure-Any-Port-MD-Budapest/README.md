@@ -2,6 +2,12 @@
 
 [<img src="http://azuredeploy.net/deploybutton.png"/>](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fptglynn%2FPaloAltoNetworks%2Fmaster%2FAzure-Any-Port-MD-Budapest%2FazureDeploy.json)
 
+IMPORTANT: This template was designed to be used with Palo Alto Networks PANOS-8.1 as well as the Azure Standard Load Balancer. Both are in preview/beta mode. Please contact your Palo Alto Networks field team to gain access to PANOS 8.1 beta. For the Standard Load Balancer Preview, refer to the following:
+
+https://docs.microsoft.com/en-us/azure/load-balancer/load-balancer-standard-overview#preview-sign-up
+
+It is assumed that bootstrapping will be used to configure the firewalls. The file bootstrap.xml is used as the config for both firewalls. Licensing the firewalls as part of the bootstrap process is optionsal.
+
 This template deploys a firewall sandwich environment that includes:
 
 - One Public Load Balancer (LB-Public) - "Basic SKU"
@@ -11,11 +17,14 @@ This template deploys a firewall sandwich environment that includes:
 - One Egress Load Balancer (LB-Egress) - "Standard SKU"
 - Multiple Subnets and UDRs to support the traffic flow
 
-The template creates all the infrastructure and appropriate UDRs in the 10.0.0.0/16 VNET. Post-deployment tasks include:
+The template creates all the infrastructure and appropriate UDRs in the 10.0.0.0/16 VNET. 
 
-- Licensing the FW
-- Import the configurations "multi-ip-fw1" and "multi-ip-fw2" into the FW (default username is "paloalto" and default password is "Pal0Alt0@123")
-- Installation/configuration of the web server software
+The post-deployment are:
+
+- License the FW (if not done as part of the bootstrap process)
+- Install/configure the web server software
+
+NOTE: default username is "paloalto" and default password is "Pal0Alt0@123"
 
 To Deploy ARM Template using Azure CLI in ARM mode
 
