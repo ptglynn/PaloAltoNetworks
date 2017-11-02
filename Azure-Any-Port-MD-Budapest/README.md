@@ -1,4 +1,4 @@
-# Azure-Any-Port_DEMO
+# Azure-Any-Port-Budapest-Demo
 
 [<img src="http://azuredeploy.net/deploybutton.png"/>](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fptglynn%2FPaloAltoNetworks%2Fmaster%2FAzure-Any-Port-MD-Budapest%2FazureDeploy.json)
 
@@ -6,7 +6,7 @@ IMPORTANT: This template was designed to be used with Palo Alto Networks PANOS-8
 
 https://docs.microsoft.com/en-us/azure/load-balancer/load-balancer-standard-overview#preview-sign-up
 
-It is assumed that bootstrapping will be used to configure the firewalls. The file bootstrap.xml is used as the config for both firewalls. Licensing the firewalls as part of the bootstrap process is optionsal.
+The template is configured to bootstrap the firewalls and use the file bootstrap.xml may be used as the configuration file for both devices. Please refer to the PANOS 8.1 New Features Guide for information on creating a bootstrap package for use with this template.
 
 This template deploys a firewall sandwich environment that includes:
 
@@ -44,4 +44,4 @@ To check the status of your deployment:
 - Via CLI: azure vm show -g YourResourceGroupName -n YourDeploymentLabel
 - Via Azure Portal: Your Resource Group > Deployment or Alert Logs
 
-The FW configurations provided in files multi-ip-fw1 and multi-ip-fw2 are designed to be used in a default deployment by updating the NAT rule with the public IP address of the LB-Public Load Balancer. Additional modifications may be required for use with a custom template deployment.
+The bootstrap.xml file designed to be used in a default deployment. Additional modifications may be required for use with a custom template deployment.
