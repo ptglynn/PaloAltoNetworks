@@ -1,0 +1,14 @@
+imports:
+- path: lb-sandwich.py
+
+resources:
+- name: lb-sandwich
+  type: lb-sandwich.py
+  properties:
+        project: <PROJECT NAME>
+        region: <REGION>
+        zone: <ZONE>
+        fwsourceimage: <FW SOURCE IMAGE>
+        bootstrapbucket: <BOOTSTRAP BUCKET>
+        hostsourceimage: <WEBSERVER SOURCE IMAGE>
+        sshkey: <SSH KEY>

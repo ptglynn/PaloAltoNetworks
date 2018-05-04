@@ -1,0 +1,180 @@
+resources:
+- name: management
+  type: compute.v1.network
+  properties: 
+    autoCreateSubnetworks: False
+
+- name: untrust
+  type: compute.v1.network
+  properties: 
+    autoCreateSubnetworks: False
+  
+- name: trust
+  type: compute.v1.network
+  properties: 
+    autoCreateSubnetworks: False
+  
+- name: management-subnet
+  type: compute.v1.subnetwork
+  properties: 
+    region: {{ properties["region"] }}
+    network: $(ref.management.selfLink)
+    ipCidrRange: 10.5.0.0/24
+  
+- name: untrust-subnet
+  type: compute.v1.subnetwork
+  properties: 
+    region: {{ properties["region"] }}
+    network: $(ref.untrust.selfLink)
+    ipCidrRange: 10.5.1.0/24
+  
+- name: trust-subnet
+  type: compute.v1.subnetwork
+  properties: 
+    region: {{ properties["region"] }}
+    network: $(ref.trust.selfLink)
+    ipCidrRange: 10.5.2.0/24
+  
+- name: trust-route
+  type: compute.v1.route
+  properties: 
+    description: $(ref.trust-subnet.selfLink)
+    priority: 100
+    network: $(ref.trust.selfLink)
+    destRange: 0.0.0.0/0
+    nextHopIp: 10.5.2.4
+  
+- name: management-firewall
+  type: compute.v1.firewall
+  properties: 
+    region: {{ properties["region"] }}
+    network: $(ref.management.selfLink)
+    direction: INGRESS
+    priority: 1000
+    sourceRanges: ["0.0.0.0/0"]
+    allowed:
+      - IPProtocol: tcp
+        ports: ["22", "443"]
+  
+- name: untrust-firewall
+  type: compute.v1.firewall
+  properties: 
+    region: {{ properties["region"] }}
+    network: $(ref.untrust.selfLink)
+    direction: INGRESS
+    priority: 1000
+    sourceRanges: ["0.0.0.0/0"]
+    allowed:
+      - IPProtocol: tcp
+        ports: ["80"]
+  
+- name: trust-firewall
+  type: compute.v1.firewall
+  properties: 
+    region: {{ properties["region"] }}
+    network: $(ref.trust.selfLink)
+    direction: INGRESS
+    priority: 1000
+    sourceRanges: ["0.0.0.0/0"]
+    allowed:
+     - IPProtocol: tcp
+     - IPProtocol: udp
+     - IPProtocol: icmp
+      
+- name: firewall-instancetemplate
+  type: compute.v1.instanceTemplate
+  properties:
+    project: "{{ env["project"] }}"
+    properties:
+        machineType: n1-standard-1
+        disks:
+        - deviceName: boot
+          type: PERSISTENT
+          boot: True
+          autoDelete : True
+          initializeParams:
+            sourceImage: "{{ properties["trustsourceimage"] }}"
+        networkInterfaces:
+        - network: $(ref.untrust.selfLink)
+          subnetwork: $(ref.untrust-subnet.selfLink)
+        - network: $(ref.management.selfLink)
+          subnetwork: $(ref.trust-subnet.selfLink)
+        - network: $(ref.management.selfLink)
+          subnetwork: $(ref.trust-subnet.selfLink)
+        serviceAccounts:
+        - email: default
+          scopes:
+            - 'https://www.googleapis.com/auth/compute.readonly'
+            - 'https://www.googleapis.com/auth/cloud.useraccounts.readonly'
+            - 'https://www.googleapis.com/auth/devstorage.read_only'
+            - 'https://www.googleapis.com/auth/logging.write'
+            - 'https://www.googleapis.com/auth/monitoring.write'
+
+- name: wordpress-instancetemplate
+  type: compute.v1.instanceTemplate
+  properties:
+    project: "{{ env["project"] }}"
+    properties:
+        machineType: n1-standard-1
+        disks:
+        - deviceName: boot
+          type: PERSISTENT
+          boot: True
+          autoDelete : True
+          initializeParams:
+            sourceImage: "{{ properties["trustsourceimage"] }}"
+        networkInterfaces:
+        - network: $(ref.trust.selfLink)
+          subnetwork: $(ref.trust-subnet.selfLink)
+        serviceAccounts:
+        - email: default
+          scopes:
+            - 'https://www.googleapis.com/auth/compute.readonly'
+            - 'https://www.googleapis.com/auth/cloud.useraccounts.readonly'
+            - 'https://www.googleapis.com/auth/devstorage.read_only'
+            - 'https://www.googleapis.com/auth/logging.write'
+            - 'https://www.googleapis.com/auth/monitoring.write'
+
+- name: wordpress-instancegroup
+  type: compute.v1.instanceGroupManager
+  properties:
+    zone: {{ properties["zone"] }}  
+    targetSize: 2
+    baseInstanceName: wordpress
+    instanceTemplate: $(ref.wordpress-instancetemplate.selfLink)
+
+- name: wordpress-healthcheck
+  type: compute.v1.healthCheck
+  properties:
+    timeoutSec: 3
+    description: Wordpress server health check
+    checkIntervalSec: 3
+    unhealthyThreshold: 5
+    healthyThreshold: 2
+    type: HTTP
+    httpHealthCheck:
+      port: 80
+      requestPath: /
+
+- name: wordpress-backendservice
+  type: compute.v1.regionBackendService
+  properties:
+    region: {{ properties["region"] }}
+    loadBalancingScheme: INTERNAL
+    healthChecks:
+      - $(ref.wordpress-healthcheck.selfLink)
+    protocol: TCP
+    timeoutSec: 30
+    backends:
+      - group: $(ref.wordpress-instancegroup.instanceGroup)
+
+- name: wordpress-forwardingrule
+  type: compute.v1.forwardingRule
+  properties:
+    region: {{ properties["region"] }}
+    network: $(ref.trust.selfLink)
+    subnetwork: $(ref.trust-subnet.selfLink)
+    IPAddress: 10.5.2.6
+    loadBalancingScheme: INTERNAL
+    ports: [ 80 ]
+    backendService: $(ref.wordpress-backendservice.selfLink) 
