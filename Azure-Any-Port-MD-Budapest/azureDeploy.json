@@ -888,7 +888,7 @@
             "location": "[resourceGroup().location]",
             "plan": {
                 "name": "byol",
-                "product": "vmseries1-beta-preview",
+                "product": "vmseries1",
                 "publisher": "paloaltonetworks"
             },
             "properties": {
