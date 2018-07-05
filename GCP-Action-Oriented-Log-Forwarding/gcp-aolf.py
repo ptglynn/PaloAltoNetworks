@@ -17,7 +17,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 # Define various variables
 # API Key to login to the FW
-apiKey = "LUFRPT1CU0dMRHIrOWFET0JUNzNaTmRoYmkwdjBkWWM9alUvUjBFTTNEQm93Vmx0OVhFRlNkOXdJNmVwYWk5Zmw4bEs3NjgwMkh5QT0="
+apiKey = "FW_API_KEY"
 # Flag for verbose logging
 debug = 1
 # Host name of the local server. Must be defined but can be empty.
