@@ -1,28 +1,25 @@
 # Azure-Any-Port-Budapest-Demo
 
-[<img src="http://azuredeploy.net/deploybutton.png"/>](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fptglynn%2FPaloAltoNetworks%2Fmaster%2FAzure-Any-Port-MD-Budapest%2FazureDeploy.json)
+[<img src="http://azuredeploy.net/deploybutton.png"/>](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fptglynn%2FPaloAltoNetworks%2Fmaster%2FAzure-Any-Port-bootstrap-Availability-Zones%2FazureDeploy.json)
 
-IMPORTANT: This template was designed to be used with Palo Alto Networks PANOS-8.1 as well as the Azure Standard Load Balancer. Both are in preview/beta mode. Please contact your Palo Alto Networks field team to gain access to PANOS 8.1 beta. For the Standard Load Balancer Preview, refer to the following:
+IMPORTANT: This template was designed to be used with Palo Alto Networks PANOS-8.1 as well as the Azure Standard Load Balancer. Both are in preview/beta mode. 
 
-https://docs.microsoft.com/en-us/azure/load-balancer/load-balancer-standard-overview#preview-sign-up
-
-The template is configured to bootstrap the firewalls and use the file bootstrap.xml may be used as the configuration file for both devices. Please refer to the PANOS 8.1 New Features Guide for information on creating a bootstrap package for use with this template.
+The template is configured to bootstrap the firewalls. The file bootstrap.xml may be used as the configuration file for both devices. Please refer to the PANOS 8.1 New Features Guide for information on creating a bootstrap package for use with this template.
 
 This template deploys a firewall sandwich environment that includes:
 
-- One Public Load Balancer (LB-Public) - "Basic SKU"
+- One Public Load Balancer (LB-Public) - "Standard SKU"
 - Two Palo Alto Networks Firewalls
-- One Internal Load Balancer (LB-Web) - "Basic SKU"
-- Two Ubuntu Servers for use as web servers
+- One Internal Load Balancer (LB-Web) - "Standard SKU"
+- Two wordpress servers
 - One Egress Load Balancer (LB-Egress) - "Standard SKU"
-- Multiple Subnets and UDRs to support the traffic flow
+- Subnets and UDRs to support the traffic flow
 
 The template creates all the infrastructure and appropriate UDRs in the 10.0.0.0/16 VNET. 
 
 The post-deployment are:
 
 - License the FW (if not done as part of the bootstrap process)
-- Install/configure the web server software
 
 NOTE: default username is "paloalto" and default password is "Pal0Alt0@123"
 
