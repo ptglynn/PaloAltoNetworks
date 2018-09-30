@@ -2,7 +2,7 @@
 
 [<img src="http://azuredeploy.net/deploybutton.png"/>](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fptglynn%2FPaloAltoNetworks%2Fmaster%2FAzure-Any-Port-bootstrap-Availability-Zones%2FazureDeploy.json)
 
-IMPORTANT: This template was designed to be used with Palo Alto Networks PANOS-8.1 as well as the Azure Standard Load Balancer. Both are in preview/beta mode. 
+IMPORTANT: This template was designed to be used with Palo Alto Networks PANOS-8.1 as well as the Azure Standard Load Balancer. 
 
 The template is configured to bootstrap the firewalls. The file bootstrap.xml may be used as the configuration file for both devices. Please refer to the PANOS 8.1 New Features Guide for information on creating a bootstrap package for use with this template.
 
